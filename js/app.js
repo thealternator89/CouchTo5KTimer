@@ -16,8 +16,6 @@
 
 /*global pageController workouts*/
 
-console.log('Starting');
-
 var day;
 
 if (tizen.preference.exists('currentDay')) {
