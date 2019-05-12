@@ -315,18 +315,18 @@ var currentTime = 0;
         btnStart.addEventListener("click", function() {
         		tizen.power.request("SCREEN", "SCREEN_DIM");
             pageController.movePage("page-run");
-            btnPause.style.backgroundImage = "url('./image/button_stop.png')";
+            btnPause.style.backgroundImage = "url('./image/button_pause.png')";
             startPhase(0);
         });
         btnPause.addEventListener("click", function() {
             if (animRequest) {
             		tizen.power.release("SCREEN");
                 stopRunAnimation();
-                btnPause.style.backgroundImage = "url('./image/button_start.png')";
+                btnPause.style.backgroundImage = "url('./image/button_continue.png')";
             } else {
             		tizen.power.request("SCREEN", "SCREEN_DIM");
                 animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
-                btnPause.style.backgroundImage = "url('./image/button_stop.png')";
+                btnPause.style.backgroundImage = "url('./image/button_pause.png')";
             }
         });
         btnSettime.addEventListener("click", function() {
@@ -335,11 +335,11 @@ var currentTime = 0;
             pageController.moveBackPage();
         });
         	btnReset.addEventListener("click", function() {
-        		btnPause.style.backgroundImage = "url('./image/button_stop.png')";
+        		btnPause.style.backgroundImage = "url('./image/button_pause.png')";
         		restartCurrentPhase();
         	});
         	btnSkip.addEventListener("click", function() {
-        		btnPause.style.backgroundImage = "url('./image/button_stop.png')";
+        		btnPause.style.backgroundImage = "url('./image/button_pause.png')";
         		processEndOfPhase();
         	});
     }
