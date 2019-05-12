@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/CouchTo5KTimer" version="1.0.0" viewmodes="maximized">
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://yourdomain/CouchTo5KTimer" version="1.0.0" viewmodes="maximized">
     <tizen:application id="P7ZevTAlhs.CouchTo5KTimer" package="P7ZevTAlhs" required_version="2.3.1"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon.png"/>
-    <name>CouchTo5KTimer</name>
+    <name>Couch To 5K Trainer</name>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
     <tizen:profile name="wearable"/>
     <tizen:setting background-support="enable"/>
