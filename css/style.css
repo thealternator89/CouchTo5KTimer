@@ -229,7 +229,7 @@ html, body {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 220px;
+    top: 195px;
     height: 30px;
 }
 
@@ -237,6 +237,7 @@ html, body {
 	text-align: center;
 	width: 100%;
 	margin-bottom: 2px;
+	font-size: 30px;
 }
 
 #box-phase-number {
