@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>C25K</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="data/workouts.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="page-main" class="page">
+            <div class="content-main">
+            		<div id="text-workout-pos">/</div>
+            
+       			<div id="text-week-label">WEEK</div>
+       			<div id="text-day-label">DAY</div>
+       			
+        			<div id="text-week-number"></div>
+        			<div id="text-day-number"></div>
+        			
+            		<div id="text-day-desc"></div>
+            		
+            		<div id="text-total-time"></div>
+                <div class="btn-footer" id="btn-start"></div>
+            </div>
+        </div>
+        <div id="page-run" class="page">
+            <div class="content-run">
+                <div id="box-progress">
+                    <div id="bg-progress"></div>
+                    <div id="dot-progress"></div>
+                </div>
+                <div id="box-run-time">
+                    <div class="text-time-bold" id="text-run-minute">00</div>
+                    <div class="text-time-colon">:</div>
+                    <div class="text-time-bold" id="text-run-second">00</div>
+                </div>
+                	<div id="box-phase">
+                		<div class="text-label" id="text-phase"></div>                		
+                	</div>
+                	<div id="box-phase-number">
+                		<div class="text-label" id="text-phase-number">of</div>
+                	</div>
+                <div id="btn-settime"></div>
+                <div id="btn-reset"></div>
+                <div id="btn-skip"></div>
+                <div class="btn-footer" id="btn-stop"></div>
+            </div>
+        </div>
+        	<div id="page-complete" class="page">
+        		<div id="box-complete">
+        			<div>Complete</div>
+        		</div>
+        		<div id="box-day">
+        			<div>You've completed Week <span id="text-week"></span>, Day <span id="text-day"></span>!</div>
+        		</div>
+        	</div>
+    </div>
+
+    <script src="js/page.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

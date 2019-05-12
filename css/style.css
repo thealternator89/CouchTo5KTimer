@@ -1,0 +1,275 @@
+* {
+    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#text-week-label {
+	position: absolute;
+	top: 47px;
+	left: 97px;
+	color: #CCC;
+}
+
+#text-day-label {
+	position: absolute;
+	top: 47px;
+	left: 192px;
+	color: #CCC;
+	
+}
+
+#text-week-number {
+	position: absolute;
+	top: 32px;
+	left: 150px;
+	font-weight: bold;
+	font-size: 40px;
+}
+
+#text-day-number {
+	position: absolute;
+	top: 32px;
+	left: 235px;
+	font-weight: bold;
+	font-size: 40px;
+}
+
+#text-day-desc {
+	position: absolute;
+	top: 80px;
+	left: 30px;
+	right: 30px;
+	bottom: 120px;
+	font-size: 25px;
+	text-align: center;
+	overflow: scroll;
+}
+
+#text-workout-pos {
+	position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 10px;
+    height: 30px;
+    text-align: center;
+}
+
+#text-total-time {
+	position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 240px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.content-main {
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.text-label {
+	color: white;
+}
+
+#btn-reset {
+    background-image: url("../image/button_reset.png");
+    position: absolute;
+    left: 55px;
+    top: 140px;
+    width: 38px;
+    height: 38px;
+}
+
+#btn-skip {
+    background-image: url("../image/button_skip.png");
+    position: absolute;
+    right: 55px;
+    top: 140px;
+    width: 38px;
+    height: 38px;
+}
+
+#box-main-time {
+    position: absolute;
+    left: 69px;
+    top: 149px;
+    width: 226px;
+    height: 78px;
+}
+
+.text-time-thin {
+    font-size: 43.2px;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}
+
+.text-time-bold {
+    font-size: 50.4px;
+    font-weight: bold;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}
+
+.text-time-colon {
+    width: 8px;
+    font-size: 28.8px;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}
+
+#text-main-hour,
+#text-main-minute,
+#text-main-second {
+    width: 70px;
+}
+
+#box-hand-hour {
+    position: absolute;
+    left: 164px;
+    top: 26px;
+    width: 32px;
+    height: 307px;
+}
+
+#box-hand-minute {
+    position: absolute;
+    left: 167px;
+    top: 30px;
+    width: 26px;
+    height: 300px;
+}
+
+#box-hand-second {
+    position: absolute;
+    left: 170px;
+    top: 33px;
+    width: 20px;
+    height: 293px;
+}
+
+#bg-progress {
+    position: absolute;
+    top: 29px;
+    left: 29px;
+    width: 302px;
+    height: 302px;
+    background-image: url("../image/indicator_runner_progress.png");
+}
+
+#bg-progress {
+    position: absolute;
+    top: 29px;
+    left: 29px;
+    width: 302px;
+    height: 302px;
+    background-image: url("../image/indicator_runner_progress.png");
+}
+
+#dot-progress {
+    position: absolute;
+    top: 25px;
+    left: 168px;
+    width: 23px;
+    height: 310px;
+    background-image: url("../image/indicator_runner_dot.png");
+    background-repeat: no-repeat;
+    transform: rotate(125deg);
+}
+
+.content-run {
+    width: 100%;
+    height: 100%;
+    /* background-image: url("../image/board_run_bg.png"); */
+}
+
+#btn-settime {
+    background-image: url("../image/button_set_time.png");
+    position: absolute;
+    left: 122px;
+    top: 68px;
+    width: 115px;
+    height: 38px;
+}
+
+#box-run-time {
+    position: absolute;
+    left: 87px;
+    top: 122px;
+    width: 277px;
+    height: 78px;
+}
+
+#box-phase {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 220px;
+    height: 30px;
+}
+
+#text-phase {
+	text-align: center;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+#box-phase-number {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 240px;
+    height: 30px;
+}
+
+#text-phase-number {
+	text-align: center;
+	width: 100%;
+}
+
+#text-run-hour,
+#text-run-minute,
+#text-run-second {
+    width: 87px;
+}
+
+.btn-footer {
+    position: absolute;
+    left: 77px;
+    top: 282px;
+    width: 206px;
+    height: 78px;
+}
+
+#btn-start {
+    background-image: url("../image/button_start.png");
+}
+
+#btn-stop {
+    background-image: url("../image/button_stop.png");
+}
