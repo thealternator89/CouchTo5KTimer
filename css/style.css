@@ -182,15 +182,6 @@ html, body {
     background-image: url("../image/indicator_runner_progress.png");
 }
 
-#bg-progress {
-    position: absolute;
-    top: 29px;
-    left: 29px;
-    width: 302px;
-    height: 302px;
-    background-image: url("../image/indicator_runner_progress.png");
-}
-
 #dot-progress {
     position: absolute;
     top: 25px;
