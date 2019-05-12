@@ -202,11 +202,10 @@ var currentTime = 0;
     }
     
     function processEndOfPhase() {
+    		navigator.vibrate(500);
 	    	if (currentPhase + 1 < workouts[day].phases.length) {
-	    		navigator.vibrate([200,100,200]);
 	        startNextPhase();
 	    } else {
-	    		navigator.vibrate([500,200,500]);
 	    		stopRunAnimation();
 	        pageController.moveBackPage();
 	        	tizen.power.release("SCREEN");
