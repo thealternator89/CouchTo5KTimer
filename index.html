@@ -3,8 +3,11 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>C25K</title>
+    <title>Couch to 5K</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-main.css">
+    <link rel="stylesheet" href="css/page-run.css">
+    <link rel="stylesheet" href="css/page-complete.css">
     <script src="data/workouts.js"></script>
 </head>
 
@@ -20,7 +23,9 @@
         			<div id="text-week-number"></div>
         			<div id="text-day-number"></div>
         			
-            		<div id="text-day-desc"></div>
+        			<div id="box-day-desc">
+            			<div id="text-day-desc"></div>
+            		</div>
             		
             		<div id="text-total-time"></div>
                 <div class="btn-footer" id="btn-start"></div>
@@ -28,10 +33,6 @@
         </div>
         <div id="page-run" class="page">
             <div class="content-run">
-                <div id="box-progress">
-                    <div id="bg-progress"></div>
-                    <div id="dot-progress"></div>
-                </div>
                 <div id="box-run-time">
                     <div class="text-time-bold" id="text-run-minute">00</div>
                     <div class="text-time-colon">:</div>
@@ -40,6 +41,9 @@
                 	<div id="box-phase">
                 		<div class="text-label" id="text-phase"></div>                		
                 	</div>
+                	<div id="box-time">
+                		<div class="text-label" id="text-time">:</div>
+                	</div>
                 	<div id="box-phase-number">
                 		<div class="text-label" id="text-phase-number">of</div>
                 	</div>
@@ -47,14 +51,22 @@
                 <div id="btn-reset"></div>
                 <div id="btn-skip"></div>
                 <div class="btn-footer" id="btn-stop"></div>
+                	<div id="run-progress"></div>
             </div>
         </div>
         	<div id="page-complete" class="page">
-        		<div id="box-complete">
-        			<div>Complete</div>
-        		</div>
-        		<div id="box-day">
-        			<div>You've completed Week <span id="text-week"></span>, Day <span id="text-day"></span>!</div>
+        		<div class="content-complete">
+        			<div id="box-complete-title">COMPLETE</div>
+        			<div id="box-complete-content">
+        			Congratulations! Another workout complete.
+        			</div>
+        			<div id="box-complete-workout">
+        				<div id="label-complete-week">WEEK</div>
+        				<div id="label-complete-day">DAY</div>
+        				<div id="text-complete-week">1</div>
+        				<div id="text-complete-day">1</div>
+        			</div>
+        			<div class="btn-footer" id="btn-home"></div>
         		</div>
         	</div>
     </div>

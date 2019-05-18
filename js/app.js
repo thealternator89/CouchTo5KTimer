@@ -28,15 +28,7 @@ var currentPhase = 0;
 var currentTime = 0;
 
 (function() {
-    var ROTATE_DATA_HAND = {
-            "START": {
-                "transform": "rotate(0deg)"
-            },
-            "END": {
-                "transform": "rotate(360deg)"
-            }
-        },
-        ROTATE_DATA_PROGRESS = {
+    var ROTATE_DATA_PROGRESS = {
             "START": {
                 "transform": "rotate(-125deg)"
             },
@@ -45,7 +37,6 @@ var currentTime = 0;
             }
         },
         setting = {
-            selectedType: "hour", // The selected type of time (hour/minute/second/none)
             timeSet: 90,
             timeRemain: 0
         },
@@ -102,15 +93,14 @@ var currentTime = 0;
      */
     function keyEventHandler(event) {
         if (event.keyName === "back") {
-            if (pageController.isPageMain() === true) {
+            if (pageController.isPageMain()) {
                 // Terminate the application if the current page is the main page.
                 try {
                     tizen.application.getCurrentApplication().exit();
                 } catch (ignore) {}
             } else {
-                // Go to the last page if the current page is not the main page.
-                stopRunAnimation();
-                pageController.moveBackPage();
+            		// TODO: Try to figure out if we can tell if we're on the timer page. So we can actually have more than 2 pages.
+            		pauseOrResumeTimer();
             }
         }
     }
@@ -167,36 +157,53 @@ var currentTime = 0;
         }
         // TimeElapsed is sum of progress from each calls.
         setting.timeRemain -= (timestamp - animTimePrevFrame) / 1000;
+        
+        const percentComplete = (1-(setting.timeRemain / setting.timeSet)) * 100
+        	document.querySelector("#run-progress").style.width = percentComplete + "%";
         	
         	const timeRemaining = Math.floor(setting.timeRemain);
         	
-        	const phase = workouts[day].phases[currentPhase];
+        	var shouldContinue = true;
         	
-        	if (currentTime !== timeRemaining &&
-        		timeRemaining <= 4 && phase.vibrate.lastFiveSecs) {
-        			navigator.vibrate(100);
+        	if (currentTime !== timeRemaining){
+        		shouldContinue = processTick(timeRemaining);
         	}
-        	
         	currentTime = timeRemaining;
-        	
-        	// Display an additional second (Show 00:01 for the final second rather than 00:00)
-        	const timeRemainDisplay = timeRemaining + 1;
-
-        if (setting.timeRemain / setting.timeSet >= 0) {
-        		const mins = Math.floor(timeRemainDisplay / 60);
-        		const secs = Math.floor(timeRemainDisplay) % 60;
+        
+        	if (shouldContinue) {
+	        	animTimePrevFrame = timestamp;
+	        animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+        	}
+    }
+    
+    function processTick(remainingSecs) {
+    		const phase = workouts[day].phases[currentPhase];
+    		
+	    	if (remainingSecs <= 4 && phase.vibrate.lastFiveSecs) {
+				navigator.vibrate(100);
+		}
+	    	
+	    	var time = new Date().getHours() + ":" + new Date().getMinutes();
+	    	
+	    	setText(document.querySelector("#text-time"), time);
+	    	
+	    	// Display an additional second (Show 00:01 for the final second rather than 00:00)
+	    	var displayTime = Math.min(remainingSecs + 1, setting.timeSet);
+	    	
+	    	if (displayTime != 0) {
+        		const mins = Math.floor(displayTime / 60);
+        		const secs = Math.floor(displayTime) % 60;
         	
             setText(document.querySelector("#text-run-minute"),
                     addLeadingZero(mins, 2));
             setText(document.querySelector("#text-run-second"),
                     addLeadingZero(secs, 2));
-            applyStyleTransition(elmDotProg, ROTATE_DATA_PROGRESS, "START", "END", 1 - (setting.timeRemain / setting.timeSet));
-            
-            animTimePrevFrame = timestamp;
-            animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+            	return true;
         } else {
         		processEndOfPhase();
+        		return false;
         }
+	    	
     }
     
     function processEndOfPhase() {
@@ -205,7 +212,11 @@ var currentTime = 0;
 	        startNextPhase();
 	    } else {
 	    		stopRunAnimation();
-	        pageController.moveBackPage();
+	    		setText(document.querySelector("#text-complete-week"),
+	    			workouts[day].week);
+	    		setText(document.querySelector("#text-complete-day"),
+				workouts[day].day);
+	    		pageController.movePage("page-complete");
 	        	tizen.power.release("SCREEN");
 	    }
     }
@@ -259,14 +270,31 @@ var currentTime = 0;
         var direction = event.detail.direction;
 
         if (pageController.isPageMain() === true) {
-            if (direction === "CW" && day + 1 < workouts.length) {
-                	day++;
-            } else if (direction === "CCW" && day - 1 >= 0) {
-            		day--;
+            if (direction === "CW") {
+                incrementDay();
+            } else if (direction === "CCW") {
+            		decrementDay();
             }
-            tizen.preference.setValue('currentDay', day);
-            	updateMenuScreen();
         }
+    }
+    
+    function incrementDay() {
+    		if (day + 1 < workouts.length) {
+    			setDay(day + 1);
+    			updateMenuScreen();
+    		}
+    }
+    
+    function decrementDay() {
+    		if (day - 1 >= 0) {
+    			setDay(day - 1);
+    			updateMenuScreen();
+    		}
+    }
+    
+    function setDay(dayNumber) {
+    		day = dayNumber;
+    		tizen.preference.setValue('currentDay', dayNumber);
     }
     
     function updateMenuScreen(){
@@ -292,9 +320,22 @@ var currentTime = 0;
     				workout.description);
     		
     		setText(document.querySelector("#text-total-time"),
-    				workout.phases.length + " phases - Duration: " + addLeadingZero(mins, 2) + ":" + addLeadingZero(secs, 2));
+    				workout.phases.length + " phases - " + addLeadingZero(mins, 2) + ":" + addLeadingZero(secs, 2));
     }
 
+    function pauseOrResumeTimer(){ 
+    		var btnPause = document.querySelector("#btn-stop");
+	    	if (animRequest) {
+	    		tizen.power.release("SCREEN");
+	        stopRunAnimation();
+	        btnPause.style.backgroundImage = "url('./image/button_continue.png')";
+	    } else {
+	    		tizen.power.request("SCREEN", "SCREEN_DIM");
+	        animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+	        btnPause.style.backgroundImage = "url('./image/button_pause.png')";
+	    }
+    }
+    
     /**
      * Sets default event listeners.
      * @private
@@ -304,7 +345,8 @@ var currentTime = 0;
             btnPause = document.querySelector("#btn-stop"),
             btnSettime = document.querySelector("#btn-settime"),
             	btnReset = document.querySelector("#btn-reset"),
-            btnSkip = document.querySelector("#btn-skip");
+            btnSkip = document.querySelector("#btn-skip"),
+            btnHome = document.querySelector("#btn-home");
 
         // Add hardware key event listener
         window.addEventListener("tizenhwkey", keyEventHandler);
@@ -317,15 +359,7 @@ var currentTime = 0;
             startPhase(0);
         });
         btnPause.addEventListener("click", function() {
-            if (animRequest) {
-            		tizen.power.release("SCREEN");
-                stopRunAnimation();
-                btnPause.style.backgroundImage = "url('./image/button_continue.png')";
-            } else {
-            		tizen.power.request("SCREEN", "SCREEN_DIM");
-                animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
-                btnPause.style.backgroundImage = "url('./image/button_pause.png')";
-            }
+        		pauseOrResumeTimer();
         });
         btnSettime.addEventListener("click", function() {
         		tizen.power.release("SCREEN");
@@ -340,8 +374,12 @@ var currentTime = 0;
         		btnPause.style.backgroundImage = "url('./image/button_pause.png')";
         		processEndOfPhase();
         	});
+        	btnHome.addEventListener("click", function() {
+        		incrementDay();
+        		pageController.movePage("page-main");
+        	});
     }
-
+    
     /**
      * Initializes the application.
      * @private
@@ -353,6 +391,7 @@ var currentTime = 0;
         // Add both pages to the page controller
         pageController.addPage("page-main");
         pageController.addPage("page-run");
+        pageController.addPage("page-complete");
     }
 
     window.onload = init;
