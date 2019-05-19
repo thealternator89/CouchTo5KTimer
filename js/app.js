@@ -30,16 +30,16 @@ var currentTime = 0;
 var countdown = 0;
 var shouldVibrateCountdown = false;
 
+function getCurrentWorkout() {
+	return workouts[day];
+}
+
+function getCurrentWorkoutPhase() {
+	return getCurrentWorkout().phases[currentPhase];
+}
+
 (function() {
-	var ROTATE_DATA_PROGRESS = {
-			"START": {
-				"transform": "rotate(-125deg)"
-			},
-			"END": {
-				"transform": "rotate(125deg)"
-			}
-	},
-	setting = {
+	var setting = {
 			timeSet: 90,
 			timeRemain: 0
 	},
@@ -170,14 +170,17 @@ var shouldVibrateCountdown = false;
 	 */
 	function processTick(remainingSecs) {
 		// TODO: refactor this into a few functions.
-		const phase = workouts[day].phases[currentPhase];
+		const phase = getCurrentWorkoutPhase();
 		
 		if (remainingSecs <= 4 && phase.vibrate.lastFiveSecs) {
 			vibrate(100);
 		} else if (shouldVibrateCountdown) {
-			if (countdown > 0) {
+			if (countdown > 1) {
 				countdown--;
 				vibrate(100);
+			} else if (countdown > 0) {
+				countdown --;
+				vibrate([100,100,100]); //quick double vibrate 
 			} else {
 				vibrate([100,100,100,100,100]); //quick triple vibrate
 				shouldVibrateCountdown = false;
@@ -205,13 +208,12 @@ var shouldVibrateCountdown = false;
 		// Display an additional second (Show 00:01 for the final second rather than 00:00)
 		var displayTime = Math.min(remainingSecs + 1, setting.timeSet);
 
-		const mins = Math.floor(displayTime / 60);
-		const secs = Math.floor(displayTime) % 60;
+		const time = secondsToMinsSecs(displayTime);
 
 		setText(document.querySelector("#text-run-minute"),
-				addLeadingZero(mins, 2));
+				addLeadingZero(time.mins, 2));
 		setText(document.querySelector("#text-run-second"),
-				addLeadingZero(secs, 2));
+				addLeadingZero(time.secs, 2));
 	}
 
 	function processEndOfPhase() {
@@ -227,7 +229,7 @@ var shouldVibrateCountdown = false;
 	function startNextPhase() {
 		shouldVibrateCountdown = false;
 		stopRunAnimation();
-		if (currentPhase + 1 < workouts[day].phases.length) {
+		if (currentPhase + 1 < getCurrentWorkout().phases.length) {
 			startPhase(currentPhase +1);
 		} else {
 			endWorkout();
@@ -236,9 +238,7 @@ var shouldVibrateCountdown = false;
 
 	function startPhase(phaseNumber) {
 		currentPhase = phaseNumber;
-
-		var currentDay = workouts[day];
-		var phases = currentDay.phases;
+		var phases = getCurrentWorkout().phases;
 		var phase = phases[phaseNumber];
 
 		setText(document.querySelector('#text-phase'),
@@ -253,10 +253,11 @@ var shouldVibrateCountdown = false;
 	}
 	
 	function endWorkout() {
+		var workout = getCurrentWorkout();
 		setText(document.querySelector("#text-complete-week"),
-				workouts[day].week);
+				workout.week);
 		setText(document.querySelector("#text-complete-day"),
-				workouts[day].day);
+				workout.day);
 		pageController.movePage("page-complete");
 		tizen.power.release("SCREEN");
 	}
@@ -310,16 +311,15 @@ var shouldVibrateCountdown = false;
 	}
 
 	function reloadMenuScreen(){
-		var workout = workouts[day];
+		var workout = getCurrentWorkout();
 
 		var totalTimeSecs = 0;
 
 		for (const phase of workout.phases) {
 			totalTimeSecs += phase.time;
 		}
-
-		const mins =  Math.floor(totalTimeSecs / 60);
-		const secs = totalTimeSecs % 60;
+		
+		const time = secondsToMinsSecs(totalTimeSecs);
 
 		setText(document.querySelector("#text-workout-pos"),
 				"Day " + (day + 1) + " of " + workouts.length);
@@ -332,7 +332,7 @@ var shouldVibrateCountdown = false;
 				workout.description);
 
 		setText(document.querySelector("#text-total-time"),
-				workout.phases.length + " phases - " + formatTime([mins, secs]));
+				workout.phases.length + " phases - " + formatTime([time.mins, time.secs]));
 	}
 
 	function pauseOrResumeTimer(){ 

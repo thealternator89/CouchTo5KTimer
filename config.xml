@@ -7,5 +7,5 @@
     <name>Couch To 5K Trainer</name>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
     <tizen:profile name="wearable"/>
-    <tizen:setting background-support="enable"/>
+    <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
 </widget>

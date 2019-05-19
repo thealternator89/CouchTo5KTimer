@@ -28,6 +28,13 @@ function formatTime(time) {
 	return timeStr;
 }
 
+function secondsToMinsSecs(seconds) {
+	return {
+		mins: Math.floor(seconds / 60),
+		secs: Math.floor(seconds) % 60
+	}
+}
+
 /**
  * Vibrate 
  * @param timing
