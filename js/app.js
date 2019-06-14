@@ -27,9 +27,6 @@ if (tizen.preference.exists('currentDay')) {
 var currentPhase = 0;
 var currentTime = 0;
 
-var countdown = 0;
-var shouldVibrateCountdown = false;
-
 function getCurrentWorkout() {
 	return workouts[day];
 }
@@ -45,32 +42,6 @@ function getCurrentWorkoutPhase() {
 	},
 	animTimePrevFrame,
 	animRequest;
-
-	/**
-	 * Removes all child of the element.
-	 * @private
-	 * @param {Object} elm - The object to be emptied
-	 * @return {Object} The emptied element
-	 */
-	function emptyElement(elm) {
-		while (elm.firstChild) {
-			elm.removeChild(elm.firstChild);
-		}
-
-		return elm;
-	}
-
-	/**
-	 * Sets the text data to the element.
-	 * @private
-	 * @param {Object} elm - An element to be changed.
-	 * @param {string} data - A text string to set.
-	 */
-	function setText(elm, data) {
-		emptyElement(elm);
-		elm.appendChild(document.createTextNode(data));
-	}
-
 	
 	/**
 	 * Handles the hardware key event.
@@ -85,9 +56,7 @@ function getCurrentWorkoutPhase() {
 					tizen.application.getCurrentApplication().exit();
 				} catch (ignore) {}
 			} else {
-				// TODO: Try to figure out if we can tell if we're on the timer page. So we can actually have more than 2 pages.
-				shouldVibrateCountdown = true;
-				countdown = 15;
+				pauseOrResumeTimer();
 			}
 		}
 	}
@@ -174,17 +143,6 @@ function getCurrentWorkoutPhase() {
 		
 		if (remainingSecs <= 4 && phase.vibrate.lastFiveSecs) {
 			vibrate(100);
-		} else if (shouldVibrateCountdown) {
-			if (countdown > 1) {
-				countdown--;
-				vibrate(100);
-			} else if (countdown > 0) {
-				countdown --;
-				vibrate([100,100,100]); //quick double vibrate 
-			} else {
-				vibrate([100,100,100,100,100]); //quick triple vibrate
-				shouldVibrateCountdown = false;
-			}
 		}
 		
 		updateClock();
@@ -227,7 +185,6 @@ function getCurrentWorkoutPhase() {
 	}
 
 	function startNextPhase() {
-		shouldVibrateCountdown = false;
 		stopRunAnimation();
 		if (currentPhase + 1 < getCurrentWorkout().phases.length) {
 			startPhase(currentPhase +1);
@@ -245,7 +202,7 @@ function getCurrentWorkoutPhase() {
 				phase.label);
 
 		setText(document.querySelector('#text-phase-number'),
-				(phaseNumber + 1) + ' of ' + phases.length);
+				(phaseNumber + 1) + ' / ' + phases.length);
 
 		setting.timeSet = phase.time;
 		setting.timeRemain = phase.time;
@@ -258,6 +215,8 @@ function getCurrentWorkoutPhase() {
 				workout.week);
 		setText(document.querySelector("#text-complete-day"),
 				workout.day);
+		setHtmlContent(document.querySelector("#text-complete-content"),
+				workout.complete);
 		pageController.movePage("page-complete");
 		tizen.power.release("SCREEN");
 	}
@@ -342,7 +301,7 @@ function getCurrentWorkoutPhase() {
 			stopRunAnimation();
 			btnPause.style.backgroundImage = "url('./image/button_continue.png')";
 		} else {
-			tizen.power.request("SCREEN", "SCREEN_DIM");
+			tizen.power.request("SCREEN", "SCREEN_NORMAL");
 			animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
 			btnPause.style.backgroundImage = "url('./image/button_pause.png')";
 		}
@@ -365,7 +324,7 @@ function getCurrentWorkoutPhase() {
 		document.addEventListener("rotarydetent", rotaryEventHandler);
 
 		btnStart.addEventListener("click", function() {
-			tizen.power.request("SCREEN", "SCREEN_DIM");
+			tizen.power.request("SCREEN", "SCREEN_NORMAL");
 			pageController.movePage("page-run");
 			btnPause.style.backgroundImage = "url('./image/button_pause.png')";
 			startPhase(0);

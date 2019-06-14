@@ -44,3 +44,33 @@ function vibrate(timing) {
 	navigator.vibrate(timing);
 }
 
+/**
+ * Removes all child of the element.
+ * @private
+ * @param {Object} elm - The object to be emptied
+ * @return {Object} The emptied element
+ */
+function emptyElement(elm) {
+	while (elm.firstChild) {
+		elm.removeChild(elm.firstChild);
+	}
+
+	return elm;
+}
+
+/**
+ * Sets the text data to the element.
+ * @private
+ * @param {Object} elm - An element to be changed.
+ * @param {string} data - A text string to set.
+ */
+function setText(elm, data) {
+	emptyElement(elm);
+	elm.appendChild(document.createTextNode(data));
+}
+
+function setHtmlContent(elm, html) {
+	emptyElement(elm);
+	elm.innerHTML = html;
+}
+
