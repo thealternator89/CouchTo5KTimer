@@ -22,13 +22,13 @@
 }
 
 #run-progress{
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	width: 0%;
-	height: 100%;
-	background-color: #333;
-	z-index: -1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    background-color: #333;
+    z-index: -1;
 }
 
 #btn-reset {
@@ -75,14 +75,14 @@
 }
 
 #text-phase {
-	text-align: center;
-	width: 100%;
-	margin-bottom: 2px;
-	font-size: 30px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 30px;
 }
 
 #box-time {
-	position: absolute;
+    position: absolute;
     left: 0px;
     right: 0px;
     top: 10px;
@@ -90,10 +90,10 @@
 }
 
 #text-time {
-	text-align: center;
-	width: 100%;
-	margin-bottom: 2px;
-	font-size: 30px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 30px;
 }
 
 #box-phase-number {
@@ -106,9 +106,9 @@
 
 
 #text-phase-number {
-	text-align: center;
-	width: 100%;
-	font-size: 30px;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
 }
 
 #text-run-minute {
@@ -116,5 +116,5 @@
 }
 
 #text-run-second {
-	margin-left: 10px;
+    margin-left: 10px;
 }
