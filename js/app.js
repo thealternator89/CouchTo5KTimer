@@ -128,7 +128,7 @@ function getCurrentWorkoutPhase() {
 
 		if (shouldContinue) {
 			animTimePrevFrame = timestamp;
-			animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+			startRunAnimation();
 		}
 	}
 
@@ -206,7 +206,7 @@ function getCurrentWorkoutPhase() {
 
 		setting.timeSet = phase.time;
 		setting.timeRemain = phase.time;
-		animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+		startRunAnimation();
 	}
 	
 	function endWorkout() {
@@ -215,7 +215,7 @@ function getCurrentWorkoutPhase() {
 				workout.week);
 		setText(document.querySelector("#text-complete-day"),
 				workout.day);
-		setHtmlContent(document.querySelector("#text-complete-content"),
+		setHtmlContent(document.querySelector("#box-complete-content"),
 				workout.complete);
 		pageController.movePage("page-complete");
 		tizen.power.release("SCREEN");
@@ -230,6 +230,13 @@ function getCurrentWorkoutPhase() {
 		window.cancelAnimationFrame(animRequest);
 		animTimePrevFrame = 0;
 		animRequest = 0;
+	}
+	
+	/**
+	 * Starts the animation
+	 */
+	function startRunAnimation() {
+		animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
 	}
 
 	/**
@@ -296,15 +303,19 @@ function getCurrentWorkoutPhase() {
 
 	function pauseOrResumeTimer(){ 
 		var btnPause = document.querySelector("#btn-stop");
-		if (animRequest) {
+		if (timerIsRunning()) {
 			tizen.power.release("SCREEN");
 			stopRunAnimation();
 			btnPause.style.backgroundImage = "url('./image/button_continue.png')";
 		} else {
 			tizen.power.request("SCREEN", "SCREEN_NORMAL");
-			animRequest = window.requestAnimationFrame(drawRunAnimationFrame);
+			startRunAnimation();
 			btnPause.style.backgroundImage = "url('./image/button_pause.png')";
 		}
+	}
+	
+	function timerIsRunning() {
+		return !!animRequest;
 	}
 
 	/**
@@ -359,7 +370,7 @@ function getCurrentWorkoutPhase() {
 		setDefaultEvents();
 		reloadMenuScreen();
 
-		// Add both pages to the page controller
+		// Add pages to the page controller
 		pageController.addPage("page-main");
 		pageController.addPage("page-run");
 		pageController.addPage("page-complete");
