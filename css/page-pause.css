@@ -52,3 +52,32 @@
     float: left;
     color: #ffffff;
 }
+
+#box-pause-phase {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 85px;
+    height: 30px;
+}
+
+#text-pause-phase {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 30px;
+}
+
+#box-pause-phase-number {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 190px;
+    height: 30px;
+}
+
+#text-pause-phase-number {
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+}

@@ -323,11 +323,19 @@ function getCurrentWorkoutPhase() {
 	}
 	
 	function populatePausePage() {
+		// Time - Minute
 		copyElementText(document.querySelector("#text-run-minute"),
 				document.querySelector("#text-pause-minute"));
-		
+		// Time - Second
 		copyElementText(document.querySelector("#text-run-second"),
 				document.querySelector("#text-pause-second"));
+		
+		// Phase - Text
+		copyElementText(document.querySelector("#text-phase"),
+				document.querySelector("#text-pause-phase"));
+		// Phase - Number
+		copyElementText(document.querySelector("#text-phase-number"),
+				document.querySelector("#text-pause-phase-number"));
 	}
 	
 	function copyElementText(source, dest) {
