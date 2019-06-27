@@ -1,0 +1,54 @@
+.content-pause {
+    width: 100%;
+    height: 100%;
+}
+
+#btn-cancel {
+    background-image: url("../image/button_cancel.png");
+    position: absolute;
+    left: 77px;
+    top: 229px;
+    width: 206px;
+    height: 51px;
+}
+
+#btn-continue {
+    background-image: url("../image/button_continue.png");
+}
+
+#box-pause-time {
+    position: absolute;
+    left: 88px;
+    top: 122px;
+    width: 195px;
+    height: 78px;
+}
+
+#text-pause-minute {
+    margin-right: 10px;
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}
+
+#text-pause-second {
+    margin-left: 10px;
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}
+
+#text-pause-time-colon {
+    width: 8px;
+    font-size: 28.8px;
+    line-height: 78px;
+    text-align: center;
+    float: left;
+    color: #ffffff;
+}

@@ -301,17 +301,37 @@ function getCurrentWorkoutPhase() {
 				workout.phases.length + " phases - " + formatTime([time.mins, time.secs]));
 	}
 
-	function pauseOrResumeTimer(){ 
-		var btnPause = document.querySelector("#btn-stop");
+	function pauseOrResumeTimer(){
 		if (timerIsRunning()) {
-			tizen.power.release("SCREEN");
-			stopRunAnimation();
-			btnPause.style.backgroundImage = "url('./image/button_continue.png')";
+			pauseTimer();
 		} else {
-			tizen.power.request("SCREEN", "SCREEN_NORMAL");
-			startRunAnimation();
-			btnPause.style.backgroundImage = "url('./image/button_pause.png')";
+			resumeTimer();
 		}
+	}
+	
+	function pauseTimer() {
+		tizen.power.release("SCREEN");
+		stopRunAnimation();
+		populatePausePage();
+		pageController.movePage("page-pause");
+	}
+	
+	function resumeTimer() {
+		tizen.power.request("SCREEN", "SCREEN_NORMAL");
+		pageController.movePage("page-run");
+		startRunAnimation();
+	}
+	
+	function populatePausePage() {
+		copyElementText(document.querySelector("#text-run-minute"),
+				document.querySelector("#text-pause-minute"));
+		
+		copyElementText(document.querySelector("#text-run-second"),
+				document.querySelector("#text-pause-second"));
+	}
+	
+	function copyElementText(source, dest) {
+		setText(dest, source.innerText);
 	}
 	
 	function timerIsRunning() {
@@ -325,7 +345,8 @@ function getCurrentWorkoutPhase() {
 	function setDefaultEvents() {
 		var btnStart = document.querySelector("#btn-start"),
 		btnPause = document.querySelector("#btn-stop"),
-		btnSettime = document.querySelector("#btn-settime"),
+		btnContinue = document.querySelector("#btn-continue"),
+		btnCancel = document.querySelector("#btn-cancel"),
 		btnReset = document.querySelector("#btn-reset"),
 		btnSkip = document.querySelector("#btn-skip"),
 		btnHome = document.querySelector("#btn-home");
@@ -341,12 +362,13 @@ function getCurrentWorkoutPhase() {
 			startPhase(0);
 		});
 		btnPause.addEventListener("click", function() {
-			pauseOrResumeTimer();
+			pauseTimer();
 		});
-		btnSettime.addEventListener("click", function() {
-			tizen.power.release("SCREEN");
-			stopRunAnimation();
-			pageController.moveBackPage();
+		btnContinue.addEventListener("click", function() {
+			resumeTimer();
+		});
+		btnCancel.addEventListener("click", function() {
+			pageController.movePage("page-main");
 		});
 		btnReset.addEventListener("click", function() {
 			btnPause.style.backgroundImage = "url('./image/button_pause.png')";
@@ -362,6 +384,10 @@ function getCurrentWorkoutPhase() {
 		});
 	}
 
+	function pageBeforeShowHandler() {
+		progressBarWidget = new tau.widget.CircleProgressBar(progressBar, {size: 'full'});
+	}
+	
 	/**
 	 * Initializes the application.
 	 * @private
@@ -369,10 +395,13 @@ function getCurrentWorkoutPhase() {
 	function init() {
 		setDefaultEvents();
 		reloadMenuScreen();
+		
+		document.getElementById('page-run').addEventListener('pagebeforeshow', pageBeforeShowHandler);
 
 		// Add pages to the page controller
 		pageController.addPage("page-main");
 		pageController.addPage("page-run");
+		pageController.addPage("page-pause");
 		pageController.addPage("page-complete");
 	}
 

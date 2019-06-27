@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/page-main.css">
     <link rel="stylesheet" href="css/page-run.css">
+    <link rel="stylesheet" href="css/page-pause.css">
     <link rel="stylesheet" href="css/page-complete.css">
     <script src="data/workouts.js"></script>
     <script src="js/util.js"></script>
@@ -16,60 +17,77 @@
     <div id="container">
         <div id="page-main" class="page">
             <div class="content-main">
-            		<div id="text-workout-pos">/</div>
-            
-       			<div id="text-week-label">WEEK</div>
-       			<div id="text-day-label">DAY</div>
-       			
-        			<div id="text-week-number"></div>
-        			<div id="text-day-number"></div>
-        			
-        			<div id="box-day-desc">
-            			<div id="text-day-desc"></div>
-            		</div>
-            		
-            		<div id="text-total-time"></div>
+                    <div id="text-workout-pos">/</div>
+
+                   <div id="text-week-label">WEEK</div>
+                   <div id="text-day-label">DAY</div>
+
+                    <div id="text-week-number"></div>
+                    <div id="text-day-number"></div>
+
+                    <div id="box-day-desc">
+                        <div id="text-day-desc"></div>
+                    </div>
+
+                    <div id="text-total-time"></div>
                 <div class="btn-footer" id="btn-start"></div>
             </div>
         </div>
         <div id="page-run" class="page">
             <div class="content-run">
                 <div id="box-run-time">
-                    <div class="text-time-bold" id="text-run-minute">00</div>
+                    <div class="text-time-bold" id="text-run-minute"></div>
                     <div class="text-time-colon">:</div>
-                    <div class="text-time-bold" id="text-run-second">00</div>
+                    <div class="text-time-bold" id="text-run-second"></div>
                 </div>
-                	<div id="box-phase">
-                		<div class="text-label" id="text-phase"></div>                		
-                	</div>
-                	<div id="box-time">
-                		<div class="text-label" id="text-time">:</div>
-                	</div>
-                	<div id="box-phase-number">
-                		<div class="text-label" id="text-phase-number">of</div>
-                	</div>
-                <div id="btn-settime"></div>
+                    <div id="box-phase">
+                        <div class="text-label" id="text-phase"></div>
+                    </div>
+                    <div id="box-time">
+                        <div class="text-label" id="text-time">:</div>
+                    </div>
+                    <div id="box-phase-number">
+                        <div class="text-label" id="text-phase-number"></div>
+                    </div>
                 <div id="btn-reset"></div>
                 <div id="btn-skip"></div>
                 <div class="btn-footer" id="btn-stop"></div>
-                	<div id="run-progress"></div>
+                <div id="run-progress"></div>
             </div>
         </div>
-        	<div id="page-complete" class="page">
-        		<div class="content-complete">
-        			<div id="box-complete-title">COMPLETE</div>
-        			<div id="box-complete-content">
-        			Congratulations! Another workout complete.
-        			</div>
-        			<div id="box-complete-workout">
-        				<div id="label-complete-week">WEEK</div>
-        				<div id="label-complete-day">DAY</div>
-        				<div id="text-complete-week">1</div>
-        				<div id="text-complete-day">1</div>
-        			</div>
-        			<div class="btn-footer" id="btn-home"></div>
-        		</div>
-        	</div>
+        <div id="page-pause" class="page">
+            <div class="content-pause">
+                <div id="box-pause-time">
+                    <div id="text-pause-minute">00</div>
+                    <div id="text-pause-time-colon">:</div>
+                    <div id="text-pause-second">00</div>
+                </div>
+                <div id="box-phase">
+                    <div class="text-label" id="text-pause-phase">Jogging</div>
+                </div>
+                <div id="box-phase-number">
+                    <div class="text-label" id="text-pause-phase-number">2/3</div>
+                </div>
+                <div id="btn-cancel"></div>
+                <div class="btn-footer" id="btn-continue"></div>
+                <div id="run-progress"></div>
+            </div>
+        </div>
+        <div id="page-complete" class="page">
+            <div class="content-complete">
+                <div id="box-complete-title">COMPLETE</div>
+                <div id="box-complete-content">
+                Congratulations! Another workout complete.
+                </div>
+                <div id="box-complete-workout">
+                    <div id="label-complete-week">WEEK</div>
+                    <div id="label-complete-day">DAY</div>
+                    <div id="text-complete-week">1</div>
+                    <div id="text-complete-day">1</div>
+                </div>
+                <div class="btn-footer" id="btn-home"></div>
+            </div>
+        </div>
     </div>
 
     <script src="js/page.js"></script>

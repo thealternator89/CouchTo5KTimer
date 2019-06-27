@@ -1,8 +1,8 @@
 
 /*global workouts*/
 
-const WARMUP = 'Brisk warmup walk';
-const COOLDOWN = 'Cooldown walk';
+const WARMUP = 'Warmup';
+const COOLDOWN = 'Cooldown';
 const WALKING = 'Walking';
 const JOGGING = 'Jogging';
 
@@ -307,13 +307,13 @@ workouts = [
 		week: 6,
 		day: 1,
 		phases: [
-		    { time: duration(5), label: WARMUP, vibrate: VIBRATE_LAST_FIVE_SECS },
-		    { time: duration(5), label: JOGGING, vibrate: VIBRATE_NEVER },
-		    { time: duration(3), label: WALKING, vibrate: VIBRATE_LAST_FIVE_SECS },
-		    { time: duration(8), label: JOGGING, vibrate: VIBRATE_NEVER },
-		    { time: duration(3), label: WALKING, vibrate: VIBRATE_LAST_FIVE_SECS },
-		    { time: duration(5), label: JOGGING, vibrate: VIBRATE_NEVER },
-		    { time: duration(5), label: COOLDOWN, vibrate: VIBRATE_NEVER }
+			{ time: duration(5), label: WARMUP, vibrate: VIBRATE_LAST_FIVE_SECS },
+			{ time: duration(5), label: JOGGING, vibrate: VIBRATE_NEVER },
+			{ time: duration(3), label: WALKING, vibrate: VIBRATE_LAST_FIVE_SECS },
+			{ time: duration(8), label: JOGGING, vibrate: VIBRATE_NEVER },
+			{ time: duration(3), label: WALKING, vibrate: VIBRATE_LAST_FIVE_SECS },
+			{ time: duration(5), label: JOGGING, vibrate: VIBRATE_NEVER },
+			{ time: duration(5), label: COOLDOWN, vibrate: VIBRATE_NEVER }
 		],
 		description: "Brisk 5 min warmup walk, then: Jog for 5 mins; Walk for 3 mins; Jog for 8 mins; Walk for 3 mins; Jog for 5 mins",
 		complete: ""
