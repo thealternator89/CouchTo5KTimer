@@ -27,6 +27,16 @@ if (tizen.preference.exists('currentDay')) {
 var currentPhase = 0;
 var currentTime = 0;
 
+var bar = new window.ProgressBar.Circle("#run-progress-circle", {
+  strokeWidth: 1,
+  easing: 'linear',
+  duration: 100,
+  color: '#00FF00',
+  trailColor: '#000',
+  trailWidth: 0,
+  svgStyle: null
+});
+
 function getCurrentWorkout() {
 	return workouts[day];
 }
@@ -62,51 +72,12 @@ function getCurrentWorkoutPhase() {
 	}
 
 	/**
-	 * Sets the style of element with the calculated style value from dataArray, by origPos, destPos, ratio.
-	 * Generally used for applying animation effect.
-	 * @private
-	 * @param {Object} elm - An object to be applied the calculated style value
-	 * @param {Object} dataArray- An array of style data
-	 * @param {string} origPos- Original position of transition
-	 * @param {string} destPos- Destination position of transition
-	 * @param {number} ratio - Progress ratio of transition
-	 */
-	function applyStyleTransition(elm, dataArray, origPos, destPos, ratio) {
-		var valOrigStyle,
-		valDestStyle,
-		valAnimStyle;
-
-		if (ratio > 1) {
-			ratio = 1;
-		}
-
-		// Calculate the style value of the element for the moment.
-		Object.keys(dataArray[origPos]).forEach(function(key) {
-			switch (key) {
-			case "transform":
-				// Remove the "rotate(" string, then parse float value.
-				// After parsing, calculate the result value and recover the prefix "rotate(" and suffix "deg)".
-				valOrigStyle = parseFloat(dataArray[origPos][key].substring(7));
-				valDestStyle = parseFloat(dataArray[destPos][key].substring(7));
-				valAnimStyle = "rotate(" + (valOrigStyle + (valDestStyle - valOrigStyle) * ratio) + "deg)";
-				break;
-			default:
-				break;
-			}
-
-			elm.style[key] = valAnimStyle;
-		});
-	}
-
-	/**
 	 * Makes a snapshot of main screen animation frame,
 	 * by setting style to elements by the current time.
 	 * @private
 	 * @param {number} timestamp - DOMHighResTimeStamp value passed by requestAnimationFrame.
 	 */
 	function drawRunAnimationFrame(timestamp) {
-		var elmDotProg = document.querySelector("#dot-progress");
-
 		// Check timestamp of the last frame of animation.
 		if (!animTimePrevFrame) {
 			animTimePrevFrame = timestamp;
@@ -114,8 +85,8 @@ function getCurrentWorkoutPhase() {
 		// TimeElapsed is sum of progress from each calls.
 		setting.timeRemain -= (timestamp - animTimePrevFrame) / 1000;
 
-		const percentComplete = (1-(setting.timeRemain / setting.timeSet)) * 100
-		document.querySelector("#run-progress").style.width = percentComplete + "%";
+		const progressBarPos = (1-(setting.timeRemain / setting.timeSet))
+		bar.animate(progressBarPos);
 
 		const timeRemaining = Math.floor(setting.timeRemain);
 

@@ -21,16 +21,6 @@
     height: 100%;
 }
 
-#run-progress{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 0%;
-    height: 100%;
-    background-color: #333;
-    z-index: -1;
-}
-
 #btn-reset {
     background-image: url("../image/button_reset.png");
     position: absolute;
@@ -107,4 +97,13 @@
 
 #text-run-second {
     margin-left: 10px;
+}
+
+#run-progress-circle {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: -1;
 }
