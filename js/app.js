@@ -181,7 +181,11 @@ function getCurrentWorkoutPhase() {
 
 	function restartCurrentPhase() {
 		stopRunAnimation();
-		startPhase(currentPhase);
+		if (setting.timeRemain > setting.timeSet - 5 && currentPhase > 0) {
+			startPhase(currentPhase - 1);
+		} else {
+			startPhase(currentPhase);
+		}
 	}
 
 	function startNextPhase() {
